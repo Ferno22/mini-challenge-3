@@ -41,14 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.2"
-  colorize:
-    dependency: transitive
-    description:
-      name: colorize
-      sha256: "584746cd6ba1cba0633b6720f494fe6f9601c4170f0666c1579d2aa2a61071ba"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -57,14 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
-  dio:
-    dependency: "direct main"
-    description:
-      name: dio
-      sha256: "01870acd87986f768e0c09cc4d7a19a59d814af7b34cbeb0b437d2c33bdfea4c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.3.4"
   fake_async:
     dependency: transitive
     description:
@@ -120,6 +104,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.5.9"
+  http:
+    dependency: "direct main"
+    description:
+      name: http
+      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   http_parser:
     dependency: transitive
     description:
@@ -341,14 +333,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.0"
-  tmdb_api:
-    dependency: "direct main"
-    description:
-      name: tmdb_api
-      sha256: "31f6ff1bc361ccabf5b5ccc52542e5f9b8db61dcebb74712f9ca8a77dadc7d57"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.5"
   typed_data:
     dependency: transitive
     description:
