@@ -1,7 +1,7 @@
 // Search Screen
 //    Y Should have a search box
 //    Y user can search for movies/tv shows / actors
-//    - app shows at least 10 latest searches
+//    Y app shows at least 10 latest searches
 //    Y when user submits a search at least 10 items appear.
 //    Y The user can navigate to a page of the result
 
@@ -67,6 +67,13 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
+  void _clearSearchHistory() {
+    setState(() {
+      _searchHistory.clear();
+      _saveSearchHistory();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +85,7 @@ class _SearchScreenState extends State<SearchScreen> {
             hintText: 'Search',
             border: InputBorder.none,
           ),
-          onChanged: (value) {
+          onSubmitted: (value) {
             if (value.isNotEmpty) {
               _search(value);
             } else {
@@ -87,6 +94,11 @@ class _SearchScreenState extends State<SearchScreen> {
           },
         ),
         actions: [
+          IconButton(
+            onPressed: _clearSearchHistory,
+            icon: Icon(Icons.delete),
+            tooltip: 'Clear search history',
+          ),
           IconButton(
             onPressed: () {
               _clearSearch();
@@ -140,8 +152,16 @@ class _SearchScreenState extends State<SearchScreen> {
                 },
               );
             } else {
-              return Center(
-                child: Text('No results found'),
+              return ListView.builder(
+                itemCount: _searchHistory.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(_searchHistory[index]),
+                    onTap: () {
+                      _search(_searchHistory[index]);
+                    },
+                  );
+                },
               );
             }
           } else if (snapshot.hasError) {
