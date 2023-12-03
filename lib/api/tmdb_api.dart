@@ -33,7 +33,7 @@ class TmdbApi {
   }
 
   // Fetch popular TV series
-  Future<Map<String, dynamic>> getPopularSeries() async {
+  Future<Map<String, dynamic>> getPopularTvShows() async {
     return _makeGetRequest('tv/popular?api_key=$apiKey');
   }
 
@@ -71,6 +71,14 @@ class TmdbApi {
 
   // Fetch details for a specific actor/actress
   Future<Map<String, dynamic>> getActorDetails(int id) async {
-    return _makeGetRequest('person/$id');
+    return _makeGetRequest('person/$id?api_key=$apiKey');
+  }
+
+  Future<Map<String, dynamic>> getActorMovies(int id) async {
+    return _makeGetRequest('person/$id/movie_credits?api_key=$apiKey');
+  }
+
+  Future<Map<String, dynamic>> getActorTvShows(int id) async {
+    return _makeGetRequest('person/$id/tv_credits?api_key=$apiKey');
   }
 }

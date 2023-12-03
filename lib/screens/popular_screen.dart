@@ -70,7 +70,7 @@ class _PopularScreenState extends State<PopularScreen>
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: _buildMediaGrid(_api.getPopularSeries()),
+            child: _buildMediaGrid(_api.getPopularTvShows()),
           ),
         ],
       ),

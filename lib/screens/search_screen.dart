@@ -11,6 +11,8 @@ import 'package:mini_challenge_3/screens/movie_details_screen.dart';
 import 'package:mini_challenge_3/screens/tv_show_details_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'actor_details_screen.dart';
+
 class SearchScreen extends StatefulWidget {
   static const String id = 'search_screen';
 
@@ -144,6 +146,13 @@ class _SearchScreenState extends State<SearchScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => TVShowDetailsScreen(id: id),
+                          ),
+                        );
+                      } else if (mediaType == 'person') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ActorDetailsScreen(id: id),
                           ),
                         );
                       }
