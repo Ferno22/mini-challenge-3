@@ -1,17 +1,17 @@
 // When clicking into a film, the user should navigate to this screen
 // This screen should display the following information:
-// - At least 3 cast members
-// - The year of release
-// - The director
-// - The release date
-// - PEGI info
-// - The genre
-// - A summary
-// - The length (duration)
-// - The rating
+// Y At least 3 cast members
+// Y The year of release
+// Y The director
+// Y The release date
+// Y PEGI info
+// Y The genre
+// Y A summary
+// Y The length (duration)
+// Y The rating
 // In case of a TV series, the screen should also display:
-// - The number of seasons
-// - The number of episodes
+// Y The number of seasons
+// Y The number of episodes
 // Optionally, the screen could allow the user to:
 // - Navigate across seasons
 // - Navigate across episodes
@@ -21,32 +21,91 @@ class TVShow {
   final int id;
   final String title;
   final String posterPath;
-  final List<String> castMembers;
-  final String director;
-  final String releaseDate;
-  final String pegiInfo;
-  final String genre;
-  final String summary;
-  final String duration;
-  final double rating;
+  final List<Map<String, dynamic>> createdBy;
+  final String firstAirDate;
+  final String lastAirDate;
   final int numberOfSeasons;
   final int numberOfEpisodes;
-  final List<String>? services;
+  final List<int> episodeRunTime;
+  final String overview;
+  final List<String> genres;
+  final List<String> castMembers;
+  final bool adult;
+  final bool inProduction;
+  final double rating;
+  final List<String> providers;
 
   TVShow({
     required this.id,
     required this.title,
     required this.posterPath,
-    required this.castMembers,
-    required this.director,
-    required this.releaseDate,
-    required this.pegiInfo,
-    required this.genre,
-    required this.summary,
-    required this.duration,
-    required this.rating,
+    required this.createdBy,
+    required this.firstAirDate,
+    required this.lastAirDate,
     required this.numberOfSeasons,
     required this.numberOfEpisodes,
-    this.services,
+    required this.episodeRunTime,
+    required this.overview,
+    required this.genres,
+    required this.castMembers,
+    required this.adult,
+    required this.inProduction,
+    required this.rating,
+    required this.providers,
   });
+
+  List<String> get averageEpisodeRunTime {
+    if (episodeRunTime.isEmpty) {
+      return ['Not Available'];
+    } else {
+      int sum = episodeRunTime.reduce((a, b) => a + b);
+      double average = sum / episodeRunTime.length;
+      return [average.toStringAsFixed(2)];
+    }
+  }
+
+  List<String> get creatorNames {
+    return createdBy.map((creator) => creator['name'] as String).toList();
+  }
+
+  factory TVShow.fromJson(Map<String, dynamic> json,
+      Map<String, dynamic> creditsJson, Map<String, dynamic> providersJson) {
+    var createdByJson = json['created_by'] as List;
+    List<Map<String, dynamic>> createdByList =
+        createdByJson.map((i) => i as Map<String, dynamic>).toList();
+
+    var episodeRunTimeJson = json['episode_run_time'] as List;
+    List<int> episodeRunTimeList =
+        episodeRunTimeJson.map((i) => i as int).toList();
+
+    var genresJson = json['genres'] as List;
+    List<String> genresList =
+        genresJson.map((i) => i['name'] as String).toList();
+
+    var castJson = creditsJson['cast'] as List;
+    List<String> castList = castJson.map((i) => i['name'] as String).toList();
+
+    var providerJson = providersJson['results']?['US']?['flatrate'] as List?;
+    List<String> providersList = providerJson != null
+        ? providerJson.map((i) => i['provider_name'] as String).toList()
+        : [];
+    return TVShow(
+      id: json['id'] ?? 0,
+      title: json['name'] ?? 'Not Available',
+      posterPath: json['poster_path'] ?? '',
+      createdBy: createdByList,
+      firstAirDate: json['first_air_date'] ?? '',
+      lastAirDate: json['last_air_date'] ?? '',
+      numberOfSeasons: json['number_of_seasons'] ?? 0,
+      numberOfEpisodes: json['number_of_episodes'] ?? 0,
+      episodeRunTime: episodeRunTimeList,
+      overview: json['overview'] ?? '',
+      genres: genresList,
+      castMembers: castList,
+      adult: json['adult'] ?? false,
+      inProduction: json['in_production'] ?? false,
+      rating: json['vote_average'] ?? 0.0,
+      providers: providersList,
+    );
+  }
 }

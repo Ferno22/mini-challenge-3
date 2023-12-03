@@ -1,4 +1,3 @@
-import '../models/tv_show.dart';
 import '../secrets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -18,6 +17,7 @@ class TmdbApi {
     if (response.statusCode == 200) {
       var body = response.body;
       if (body != null) {
+        print('API Response: $body'); // print the response body
         return jsonDecode(body);
       } else {
         throw Exception('Response body is null');
@@ -44,30 +44,29 @@ class TmdbApi {
 
   // Fetch details for a specific movie or TV show
   Future<Map<String, dynamic>> getMovieDetails(int id) async {
-    return _makeGetRequest('movie/$id');
+    return _makeGetRequest('movie/$id?api_key=$apiKey');
   }
 
-  Future<TVShow> getTvShowDetails(int id) async {
-    Map<String, dynamic> response = await _makeGetRequest('tv/$id');
+  // Fetch movie credits (cast and director)
+  Future<Map<String, dynamic>> getMovieCredits(int id) async {
+    return _makeGetRequest('movie/$id/credits?api_key=$apiKey&language=en-US');
+  }
 
-    return TVShow(
-      id: response['id'],
-      title: response['name'],
-      posterPath: response['poster_path'],
-      castMembers:
-          List<String>.from(response['cast'].map((item) => item['name'])),
-      director: response['created_by'][0]['name'],
-      releaseDate: response['first_air_date'],
-      pegiInfo: response['content_ratings']['results'][0]['rating'],
-      genre: response['genres'][0]['name'],
-      summary: response['overview'],
-      duration: response['episode_run_time'][0].toString(),
-      rating: response['vote_average'].toDouble(),
-      numberOfSeasons: response['number_of_seasons'],
-      numberOfEpisodes: response['number_of_episodes'],
-      services:
-          List<String>.from(response['networks'].map((item) => item['name'])),
-    );
+  // Fetch movie watch providers
+  Future<Map<String, dynamic>> getMovieProviders(int id) async {
+    return _makeGetRequest('movie/$id/watch/providers?api_key=$apiKey');
+  }
+
+  Future<Map<String, dynamic>> getTvShowDetails(int id) async {
+    return _makeGetRequest('tv/$id?api_key=$apiKey');
+  }
+
+  Future<Map<String, dynamic>> getTvShowCredits(int id) async {
+    return _makeGetRequest('tv/$id/credits?api_key=$apiKey&language=en-US');
+  }
+
+  Future<Map<String, dynamic>> getTvShowProviders(int id) async {
+    return _makeGetRequest('tv/$id/watch/providers?api_key=$apiKey');
   }
 
   // Fetch details for a specific actor/actress

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/api/tmdb_api.dart';
+import 'package:mini_challenge_3/screens/movie_details_screen.dart';
+import 'package:mini_challenge_3/screens/tv_show_details_screen.dart';
 
 class PopularScreen extends StatefulWidget {
   const PopularScreen({Key? key}) : super(key: key);
@@ -94,29 +96,50 @@ class _PopularScreenState extends State<PopularScreen>
             itemCount: mediaList.length,
             itemBuilder: (context, index) {
               var media = mediaList[index];
-              return Container(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Image.network(
-                        'https://image.tmdb.org/t/p/w500${media['poster_path'] ?? ''}',
-                        width: double.infinity,
-                        height: double.infinity,
+              return GestureDetector(
+                onTap: () {
+                  if (_tabController.index == 0) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            MovieDetailsScreen(id: media['id']),
                       ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      color: Colors.blueGrey[900],
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          media['title'] ?? media['name'] ?? '',
-                          style: const TextStyle(color: Colors.white),
-                          overflow: TextOverflow.ellipsis,
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            TVShowDetailsScreen(id: media['id']),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Image.network(
+                          'https://image.tmdb.org/t/p/w500${media['poster_path'] ?? ''}',
+                          width: double.infinity,
+                          height: double.infinity,
                         ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        width: double.infinity,
+                        color: Colors.blueGrey[900],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            media['title'] ?? media['name'] ?? '',
+                            style: const TextStyle(color: Colors.white),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

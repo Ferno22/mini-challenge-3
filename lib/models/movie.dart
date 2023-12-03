@@ -45,4 +45,32 @@ class Movie {
     required this.rating,
     this.services,
   });
+
+  Movie.fromJson(Map<String, dynamic> json, Map<String, dynamic> creditsJson,
+      Map<String, dynamic> providersJson)
+      : id = json['id'] ?? 0,
+        title = json['original_title'] ?? '',
+        posterPath = json['poster_path'] ?? '',
+        castMembers = (creditsJson['cast'] as List<dynamic>?)
+                ?.take(3)
+                .map((item) => item['name'] as String)
+                .toList() ??
+            [],
+        director = (creditsJson['crew'] as List<dynamic>?)
+                ?.firstWhere((item) => item['job'] == 'Director')['name'] ??
+            '',
+        releaseDate = json['release_date'] ?? '',
+        pegiInfo = json['adult'] ? '18+' : 'PG',
+        genre = (json['genres'] as List<dynamic>?)
+                ?.map((item) => item['name'] as String)
+                .join(', ') ??
+            '',
+        summary = json['overview'] ?? '',
+        duration = '${json['runtime']} min',
+        rating = (json['vote_average'] as num?)?.toDouble() ?? 0.0,
+        services =
+            (providersJson['results']['US']['flatrate'] as List<dynamic>?)
+                    ?.map((item) => item['provider_name'].toString())
+                    .toList() ??
+                [];
 }
