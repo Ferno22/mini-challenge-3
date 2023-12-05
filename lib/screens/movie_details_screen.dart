@@ -3,6 +3,7 @@ import 'package:mini_challenge_3/api/tmdb_api.dart';
 import 'package:mini_challenge_3/models/movie.dart';
 import 'package:mini_challenge_3/models/user_profile.dart';
 import 'package:mini_challenge_3/widgets/favorite_button_movie.dart';
+import 'package:mini_challenge_3/widgets/rating_button_movie.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final int id;
@@ -63,6 +64,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       Text('Rating: ${movie.rating.toString()}'),
                       Text('Services: ${movie.services?.join(', ')}'),
                       FavoriteButtonMovie(
+                          userProfile: widget.userProfile, movie: movie),
+                      RatingButtonMovie(
                           userProfile: widget.userProfile, movie: movie),
                     ],
                   ),

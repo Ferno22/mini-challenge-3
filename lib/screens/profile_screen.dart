@@ -16,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
       body: Column(
         children: [
           ListTile(
-            title: Text('Watchlist',
+            title: Text('My Watchlist',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           ),
           Expanded(
@@ -41,6 +41,42 @@ class ProfileScreen extends StatelessWidget {
                       );
                     },
                   ),
+                );
+              },
+            ),
+          ),
+          ListTile(
+            title: Text('My Rated List',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: userProfile.ratedList.length,
+              itemBuilder: (context, index) {
+                Map<String, dynamic> ratedItem = userProfile.ratedList[index];
+                return ListTile(
+                  leading: Image.network(
+                      'https://image.tmdb.org/t/p/w500${ratedItem['posterPath']}'),
+                  title: Text(ratedItem['title'] ?? 'Unknown Title'),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.remove_circle_outline),
+                        onPressed: () {
+                          userProfile.ratedList.removeAt(index);
+                          userProfile.saveProfile();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ProfileScreen(userProfile: userProfile)),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  subtitle: Text('Rating: ${ratedItem['rating']}'),
                 );
               },
             ),

@@ -3,6 +3,7 @@ import 'package:mini_challenge_3/api/tmdb_api.dart';
 import 'package:mini_challenge_3/models/tv_show.dart';
 import 'package:mini_challenge_3/models/user_profile.dart';
 import 'package:mini_challenge_3/widgets/favorite_button_tv_show.dart';
+import 'package:mini_challenge_3/widgets/rating_button_tv_show.dart';
 
 class TVShowDetailsScreen extends StatefulWidget {
   final int id;
@@ -70,6 +71,8 @@ class _TVShowDetailsScreenState extends State<TVShowDetailsScreen> {
                       Text('Rating: ${tvShow.rating.toString()}'),
                       Text('Services: ${tvShow.providers.join(', ')}'),
                       FavoriteButtonTVShow(
+                          userProfile: widget.userProfile, tvShow: tvShow),
+                      RatingButtonTVShow(
                           userProfile: widget.userProfile, tvShow: tvShow),
                     ],
                   ),
