@@ -1,22 +1,3 @@
-// When clicking into a film, the user should navigate to this screen
-// This screen should display the following information:
-// Y At least 3 cast members
-// Y The year of release
-// Y The director
-// Y The release date
-// Y PEGI info
-// Y The genre
-// Y A summary
-// Y The length (duration)
-// Y The rating
-// In case of a TV series, the screen should also display:
-// Y The number of seasons
-// Y The number of episodes
-// Optionally, the screen could allow the user to:
-// - Navigate across seasons
-// - Navigate across episodes
-// If the item (movie or TV show) is available on the user's selected services, an icon of these services should appear.
-
 import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/api/tmdb_api.dart';
 import 'package:mini_challenge_3/models/tv_show.dart';

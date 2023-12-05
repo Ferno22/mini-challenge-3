@@ -1,10 +1,3 @@
-// Search Screen
-//    Y Should have a search box
-//    Y user can search for movies/tv shows / actors
-//    Y app shows at least 10 latest searches
-//    Y when user submits a search at least 10 items appear.
-//    Y The user can navigate to a page of the result
-
 import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/api/tmdb_api.dart';
 import 'package:mini_challenge_3/screens/movie_details_screen.dart';
