@@ -35,6 +35,27 @@ class TVShow {
     required this.providers,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'posterPath': posterPath,
+      'createdBy': createdBy,
+      'firstAirDate': firstAirDate,
+      'lastAirDate': lastAirDate,
+      'numberOfSeasons': numberOfSeasons,
+      'numberOfEpisodes': numberOfEpisodes,
+      'episodeRunTime': episodeRunTime,
+      'overview': overview,
+      'genres': genres,
+      'castMembers': castMembers,
+      'adult': adult,
+      'inProduction': inProduction,
+      'rating': rating,
+      'providers': providers,
+    };
+  }
+
   List<String> get averageEpisodeRunTime {
     if (episodeRunTime.isEmpty) {
       return ['Not Available'];

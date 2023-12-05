@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/api/tmdb_api.dart';
 import 'package:mini_challenge_3/models/movie.dart';
+import 'package:mini_challenge_3/models/user_profile.dart';
+import 'package:mini_challenge_3/widgets/favorite_button_movie.dart';
 
-class MovieDetailsScreen extends StatelessWidget {
+class MovieDetailsScreen extends StatefulWidget {
   final int id;
+  final UserProfile userProfile;
+  MovieDetailsScreen({required this.id, required this.userProfile});
 
-  MovieDetailsScreen({required this.id});
+  @override
+  _MovieDetailsScreenState createState() => _MovieDetailsScreenState();
+}
 
+class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,9 +22,9 @@ class MovieDetailsScreen extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: Future.wait([
-          TmdbApi().getMovieDetails(id),
-          TmdbApi().getMovieCredits(id),
-          TmdbApi().getMovieProviders(id),
+          TmdbApi().getMovieDetails(widget.id),
+          TmdbApi().getMovieCredits(widget.id),
+          TmdbApi().getMovieProviders(widget.id),
         ]),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -55,6 +62,8 @@ class MovieDetailsScreen extends StatelessWidget {
                       Text('Duration: ${movie.duration}'),
                       Text('Rating: ${movie.rating.toString()}'),
                       Text('Services: ${movie.services?.join(', ')}'),
+                      FavoriteButtonMovie(
+                          userProfile: widget.userProfile, movie: movie),
                     ],
                   ),
                 ),

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mini_challenge_3/models/user_profile.dart';
 import 'popular_screen.dart';
 import 'search_screen.dart';
 import 'profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  final UserProfile userProfile;
+
+  HomeScreen({required this.userProfile});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +27,9 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PopularScreen()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          PopularScreen(userProfile: userProfile)),
                 );
               },
               child: Text('Popular Now'),
@@ -31,7 +38,9 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SearchScreen()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          SearchScreen(userProfile: userProfile)),
                 );
               },
               child: Text('Search'),
@@ -40,7 +49,9 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ProfileScreen(userProfile: userProfile)),
                 );
               },
               child: Text('My Profile'),

@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/api/tmdb_api.dart';
 import 'package:mini_challenge_3/models/tv_show.dart';
+import 'package:mini_challenge_3/models/user_profile.dart';
+import 'package:mini_challenge_3/widgets/favorite_button_tv_show.dart';
 
-class TVShowDetailsScreen extends StatelessWidget {
+class TVShowDetailsScreen extends StatefulWidget {
   final int id;
+  final UserProfile userProfile;
 
-  TVShowDetailsScreen({required this.id});
+  TVShowDetailsScreen({required this.id, required this.userProfile});
 
+  @override
+  _TVShowDetailsScreenState createState() => _TVShowDetailsScreenState();
+}
+
+class _TVShowDetailsScreenState extends State<TVShowDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,9 +23,9 @@ class TVShowDetailsScreen extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: Future.wait([
-          TmdbApi().getTvShowDetails(id),
-          TmdbApi().getTvShowCredits(id),
-          TmdbApi().getTvShowProviders(id),
+          TmdbApi().getTvShowDetails(widget.id),
+          TmdbApi().getTvShowCredits(widget.id),
+          TmdbApi().getTvShowProviders(widget.id),
         ]),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -61,6 +69,8 @@ class TVShowDetailsScreen extends StatelessWidget {
                           'In Production: ${tvShow.inProduction ? 'Yes' : 'No'}'),
                       Text('Rating: ${tvShow.rating.toString()}'),
                       Text('Services: ${tvShow.providers.join(', ')}'),
+                      FavoriteButtonTVShow(
+                          userProfile: widget.userProfile, tvShow: tvShow),
                     ],
                   ),
                 ),

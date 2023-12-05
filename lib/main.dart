@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mini_challenge_3/models/user_profile.dart';
 import 'package:mini_challenge_3/screens/home_screen.dart';
 
-Future main() async {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  UserProfile userProfile = await UserProfile.getInstance();
+  runApp(MyApp(userProfile: userProfile));
 }
 
 class MyApp extends StatelessWidget {
+  final UserProfile userProfile;
+
+  MyApp({required this.userProfile});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +35,7 @@ class MyApp extends StatelessWidget {
               fontSize: 14.0,
             ),
           )),
-      home: HomeScreen(),
+      home: HomeScreen(userProfile: userProfile),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/api/tmdb_api.dart';
+import 'package:mini_challenge_3/models/user_profile.dart';
 import 'package:mini_challenge_3/screens/movie_details_screen.dart';
 import 'package:mini_challenge_3/screens/tv_show_details_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +9,9 @@ import 'actor_details_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   static const String id = 'search_screen';
+  final UserProfile userProfile;
+
+  SearchScreen({required this.userProfile});
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -131,14 +135,16 @@ class _SearchScreenState extends State<SearchScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MovieDetailsScreen(id: id),
+                            builder: (context) => MovieDetailsScreen(
+                                id: id, userProfile: widget.userProfile),
                           ),
                         );
                       } else if (mediaType == 'tv') {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => TVShowDetailsScreen(id: id),
+                            builder: (context) => TVShowDetailsScreen(
+                                id: id, userProfile: widget.userProfile),
                           ),
                         );
                       } else if (mediaType == 'person') {

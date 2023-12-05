@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/api/tmdb_api.dart';
+import 'package:mini_challenge_3/models/user_profile.dart';
 import 'package:mini_challenge_3/screens/movie_details_screen.dart';
 import 'package:mini_challenge_3/screens/tv_show_details_screen.dart';
 
 class PopularScreen extends StatefulWidget {
-  const PopularScreen({Key? key}) : super(key: key);
+  final UserProfile userProfile;
+
+  PopularScreen({required this.userProfile});
 
   @override
   _PopularScreenState createState() => _PopularScreenState();
@@ -102,16 +105,16 @@ class _PopularScreenState extends State<PopularScreen>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            MovieDetailsScreen(id: media['id']),
+                        builder: (context) => MovieDetailsScreen(
+                            id: media['id'], userProfile: widget.userProfile),
                       ),
                     );
                   } else {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            TVShowDetailsScreen(id: media['id']),
+                        builder: (context) => TVShowDetailsScreen(
+                            id: media['id'], userProfile: widget.userProfile),
                       ),
                     );
                   }

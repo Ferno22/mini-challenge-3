@@ -27,6 +27,23 @@ class Movie {
     this.services,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'posterPath': posterPath,
+      'castMembers': castMembers,
+      'director': director,
+      'releaseDate': releaseDate,
+      'pegiInfo': pegiInfo,
+      'genre': genre,
+      'summary': summary,
+      'duration': duration,
+      'rating': rating,
+      'services': services,
+    };
+  }
+
   Movie.fromJson(Map<String, dynamic> json, Map<String, dynamic> creditsJson,
       Map<String, dynamic> providersJson)
       : id = json['id'] ?? 0,
