@@ -17,7 +17,7 @@ class TmdbApi {
     if (response.statusCode == 200) {
       var body = response.body;
       if (body != null) {
-        print('API Response: $body'); // print the response body
+        print(body);
         return jsonDecode(body);
       } else {
         throw Exception('Response body is null');
@@ -82,19 +82,30 @@ class TmdbApi {
     return _makeGetRequest('person/$id/tv_credits?api_key=$apiKey');
   }
 
-  Future<Map<String, dynamic>> getCountries() async {
-    return _makeGetRequest('configuration/countries?api_key=$apiKey');
+  Future<List<String>> getCountries() async {
+    var response = await http
+        .get(Uri.parse('$baseUrl/configuration/countries?api_key=$apiKey'));
+    // Parse JSON
+    List<Map<String, dynamic>> countries =
+        List<Map<String, dynamic>>.from(jsonDecode(response.body));
+
+    // Extract names of each country
+    List<String> countryNames = [];
+    for (var country in countries) {
+      countryNames.add(country['english_name']);
+    }
+    return countryNames;
   }
 
   Future<Map<String, dynamic>> getLanguages() async {
     return _makeGetRequest('configuration/languages?api_key=$apiKey');
   }
 
-  Future<Map<String, dynamic>> getGeneralMovieProviders() async {
+  Future<Map<String, dynamic>> getGeneralMovieServices() async {
     return _makeGetRequest('watch/providers/movie?api_key=$apiKey');
   }
 
-  Future<Map<String, dynamic>> getGeneralTVShowProviders() async {
+  Future<Map<String, dynamic>> getGeneralTVShowServices() async {
     return _makeGetRequest('watch/providers/tv?api_key=$apiKey');
   }
 }

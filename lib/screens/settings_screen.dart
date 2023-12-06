@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/models/user_profile.dart';
+import 'package:mini_challenge_3/api/tmdb_api.dart';
 
 class SettingsScreen extends StatefulWidget {
   final UserProfile userProfile;
@@ -16,6 +17,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   late String _language;
   late List<String> _services;
   late List<String> _languages;
+  late TmdbApi _api;
+  late List<String> _countryNames;
 
   @override
   void initState() {
@@ -25,6 +28,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _country = widget.userProfile.country;
     _language = widget.userProfile.language;
     _services = widget.userProfile.services;
+    _api = TmdbApi();
+    _countryNames = [];
+    _api.getCountries().then((value) {
+      setState(() {
+        _countryNames = value;
+      });
+    });
   }
 
   @override
@@ -72,7 +82,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
               });
             },
           ),
-          // Add dropdowns for country and language selection
+          // Add dropdowns for countries based on the output of the getCountries() method
+          DropdownButton<String>(
+            value: _country.isNotEmpty
+                ? _country
+                : null, // Set value to null if empty
+            hint: Text('$_country'),
+            onChanged: (String? newValue) {
+              setState(() {
+                _country = newValue ?? ''; // Set to empty string if null
+                widget.userProfile.country = _country;
+              });
+            },
+            items: _countryNames.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
           // Add checkboxes for service selection
         ],
       ),
