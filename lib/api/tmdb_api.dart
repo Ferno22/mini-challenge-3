@@ -97,15 +97,18 @@ class TmdbApi {
     return countryNames;
   }
 
-  Future<Map<String, dynamic>> getLanguages() async {
-    return _makeGetRequest('configuration/languages?api_key=$apiKey');
-  }
+  Future<List<String>> getLanguages() async {
+    var response = await http
+        .get(Uri.parse('$baseUrl/configuration/languages?api_key=$apiKey'));
+    // Parse JSON
+    List<Map<String, dynamic>> languages =
+        List<Map<String, dynamic>>.from(jsonDecode(response.body));
 
-  Future<Map<String, dynamic>> getGeneralMovieServices() async {
-    return _makeGetRequest('watch/providers/movie?api_key=$apiKey');
-  }
-
-  Future<Map<String, dynamic>> getGeneralTVShowServices() async {
-    return _makeGetRequest('watch/providers/tv?api_key=$apiKey');
+    // Extract names of each language
+    List<String> languageNames = [];
+    for (var language in languages) {
+      languageNames.add(language['english_name']);
+    }
+    return languageNames;
   }
 }

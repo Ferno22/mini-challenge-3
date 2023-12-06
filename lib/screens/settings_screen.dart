@@ -15,10 +15,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   late bool _isDarkTheme;
   late String _country;
   late String _language;
-  late List<String> _services;
-  late List<String> _languages;
   late TmdbApi _api;
   late List<String> _countryNames;
+  late List<String> _languages;
+  late List<String> _services;
 
   @override
   void initState() {
@@ -30,9 +30,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _services = widget.userProfile.services;
     _api = TmdbApi();
     _countryNames = [];
+    _languages = [];
+    _services = [
+      'Netflix',
+      'Disney+',
+      'Hulu',
+      'Prime Video',
+      'HBO Max',
+      'Apple TV+',
+      'Peacock',
+      'Paramount+',
+      'Starz',
+      'Showtime',
+      'Discovery+',
+      'IMDb TV',
+      'The Roku Channel',
+      'Pluto TV',
+      'Tubi',
+      'Vudu',
+      'FandangoNOW',
+      'Sling TV',
+      'YouTube Premium',
+      'Hoopla',
+      'Criterion Channel',
+    ];
     _api.getCountries().then((value) {
       setState(() {
         _countryNames = value;
+      });
+    });
+    _api.getLanguages().then((value) {
+      setState(() {
+        _languages = value;
       });
     });
   }
@@ -82,6 +111,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               });
             },
           ),
+          Text('Countries', style: TextStyle(fontSize: 18)),
           // Add dropdowns for countries based on the output of the getCountries() method
           DropdownButton<String>(
             value: _country.isNotEmpty
@@ -101,7 +131,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
               );
             }).toList(),
           ),
+          Text('Languages', style: TextStyle(fontSize: 18)),
+          // Add dropdowns for languages based on the output of the getLanguages() method
+          DropdownButton<String>(
+            value: _language.isNotEmpty
+                ? _language
+                : null, // Set value to null if empty
+            hint: Text('$_language'),
+            onChanged: (String? newValue) {
+              setState(() {
+                _language = newValue ?? ''; // Set to empty string if null
+                widget.userProfile.language = _language;
+              });
+            },
+            items: _languages.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
           // Add checkboxes for service selection
+          Text('Services', style: TextStyle(fontSize: 18)),
+          Column(
+            children: _services
+                .map((service) => CheckboxListTile(
+                      title: Text(service),
+                      value: widget.userProfile.services.contains(service),
+                      onChanged: (bool? value) {
+                        setState(() {
+                          if (value != null) {
+                            if (value) {
+                              widget.userProfile.services.add(service);
+                            } else {
+                              widget.userProfile.services.remove(service);
+                            }
+                            widget.userProfile.saveProfile();
+                          }
+                        });
+                      },
+                    ))
+                .toList(),
+          ),
         ],
       ),
     );
