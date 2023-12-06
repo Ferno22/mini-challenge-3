@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/models/user_profile.dart';
-import 'package:mini_challenge_3/api/tmdb_api.dart';
 
 class SettingsScreen extends StatefulWidget {
   final UserProfile userProfile;

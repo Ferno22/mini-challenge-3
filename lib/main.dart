@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/models/user_profile.dart';
-import 'package:mini_challenge_3/screens/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:mini_challenge_3/widgets/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,13 +16,12 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final UserProfile userProfile;
+
   MyApp({required this.userProfile});
 
   @override
   Widget build(BuildContext context) {
-    final userProfile = Provider.of<UserProfile>(context);
     return MaterialApp(
-      title: 'TMDB App',
       theme: ThemeData(
         // Define the theme for the app
         brightness:
@@ -64,10 +63,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      themeMode: userProfile.isDarkTheme
-          ? ThemeMode.dark
-          : ThemeMode.light, // Use the user's theme preference
-      home: HomeScreen(userProfile: userProfile),
+      themeMode: userProfile.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
+      home: MainScreen(userProfile: userProfile),
     );
   }
 }
