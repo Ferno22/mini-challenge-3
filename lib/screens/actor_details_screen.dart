@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/api/tmdb_api.dart';
 import 'package:mini_challenge_3/models/actor.dart'; // Import the Actor model
 
+/// Widget for displaying details of a specific actor, including their movies and TV shows.
 class ActorDetailsScreen extends StatelessWidget {
+  /// The unique identifier of the actor.
   final int id;
 
+  /// Constructor that takes the actor's ID as a parameter.
   ActorDetailsScreen({required this.id});
 
   @override
@@ -14,6 +17,7 @@ class ActorDetailsScreen extends StatelessWidget {
         title: Text('Actor Details'),
       ),
       body: FutureBuilder(
+        // Fetch actor details, movies, and TV shows asynchronously
         future: Future.wait([
           TmdbApi().getActorDetails(id),
           TmdbApi().getActorMovies(id),

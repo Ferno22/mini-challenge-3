@@ -4,9 +4,12 @@ import 'package:mini_challenge_3/screens/popular_screen.dart';
 import 'package:mini_challenge_3/screens/search_screen.dart';
 import 'package:mini_challenge_3/screens/profile_screen.dart';
 
+/// The main screen of the application with a bottom navigation bar.
 class MainScreen extends StatefulWidget {
+  /// The user profile associated with the current user.
   final UserProfile userProfile;
 
+  /// Constructor that takes the user profile as a parameter.
   MainScreen({required this.userProfile});
 
   @override
@@ -14,10 +17,12 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  /// Index of the currently selected tab in the bottom navigation bar.
   int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    // List of widgets corresponding to different screens in the app.
     final List<Widget> _children = [
       PopularScreen(userProfile: widget.userProfile),
       SearchScreen(userProfile: widget.userProfile),
@@ -25,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
     ];
 
     return Scaffold(
-      body: _children[_currentIndex],
+      body: _children[_currentIndex], // Display the selected screen.
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         items: const [
@@ -44,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
         ],
         onTap: (index) {
           setState(() {
-            _currentIndex = index;
+            _currentIndex = index; // Update the selected tab index.
           });
         },
       ),

@@ -5,9 +5,17 @@ import 'package:mini_challenge_3/models/user_profile.dart';
 import 'package:mini_challenge_3/widgets/favorite_button_movie.dart';
 import 'package:mini_challenge_3/widgets/rating_button_movie.dart';
 
+/// Widget for displaying details of a specific movie, including cast, director,
+/// release date, PEGI info, genre, summary, duration, rating, streaming services,
+/// and options for marking as favorite and rating.
 class MovieDetailsScreen extends StatefulWidget {
+  /// The unique identifier of the movie.
   final int id;
+
+  /// The user profile associated with the current user.
   final UserProfile userProfile;
+
+  /// Constructor that takes the movie's ID and user profile as parameters.
   MovieDetailsScreen({required this.id, required this.userProfile});
 
   @override
@@ -22,6 +30,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         title: Text('Movie Details'),
       ),
       body: FutureBuilder(
+        // Fetch movie details, credits, and providers asynchronously
         future: Future.wait([
           TmdbApi().getMovieDetails(widget.id),
           TmdbApi().getMovieCredits(widget.id),
@@ -40,6 +49,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               Map<String, dynamic> movieCredits = responses[1];
               Map<String, dynamic> movieProviders = responses[2];
 
+              // Create a Movie object from the JSON data
               Movie movie =
                   Movie.fromJson(movieDetails, movieCredits, movieProviders);
 

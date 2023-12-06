@@ -17,7 +17,6 @@ class TmdbApi {
     if (response.statusCode == 200) {
       var body = response.body;
       if (body != null) {
-        print(body);
         return jsonDecode(body);
       } else {
         throw Exception('Response body is null');
@@ -57,14 +56,17 @@ class TmdbApi {
     return _makeGetRequest('movie/$id/watch/providers?api_key=$apiKey');
   }
 
+  // Fetch details for a specific TV show
   Future<Map<String, dynamic>> getTvShowDetails(int id) async {
     return _makeGetRequest('tv/$id?api_key=$apiKey');
   }
 
+  // Fetch TV show credits (cast and director)
   Future<Map<String, dynamic>> getTvShowCredits(int id) async {
     return _makeGetRequest('tv/$id/credits?api_key=$apiKey&language=en-US');
   }
 
+  // Fetch TV show watch providers
   Future<Map<String, dynamic>> getTvShowProviders(int id) async {
     return _makeGetRequest('tv/$id/watch/providers?api_key=$apiKey');
   }
@@ -74,14 +76,17 @@ class TmdbApi {
     return _makeGetRequest('person/$id?api_key=$apiKey');
   }
 
+  // Fetch movies that an actor/actress has been in
   Future<Map<String, dynamic>> getActorMovies(int id) async {
     return _makeGetRequest('person/$id/movie_credits?api_key=$apiKey');
   }
 
+  // Fetch TV shows that an actor/actress has been in
   Future<Map<String, dynamic>> getActorTvShows(int id) async {
     return _makeGetRequest('person/$id/tv_credits?api_key=$apiKey');
   }
 
+  // Fetch a list of all available countries
   Future<List<String>> getCountries() async {
     var response = await http
         .get(Uri.parse('$baseUrl/configuration/countries?api_key=$apiKey'));
@@ -97,6 +102,7 @@ class TmdbApi {
     return countryNames;
   }
 
+  // Fetch a list of all available languages
   Future<List<String>> getLanguages() async {
     var response = await http
         .get(Uri.parse('$baseUrl/configuration/languages?api_key=$apiKey'));

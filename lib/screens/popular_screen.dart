@@ -4,9 +4,13 @@ import 'package:mini_challenge_3/models/user_profile.dart';
 import 'package:mini_challenge_3/screens/movie_details_screen.dart';
 import 'package:mini_challenge_3/screens/tv_show_details_screen.dart';
 
+/// Widget for displaying popular movies and TV shows with the option to switch
+/// between movies and TV series using a TabBar.
 class PopularScreen extends StatefulWidget {
+  /// The user profile associated with the current user.
   final UserProfile userProfile;
 
+  /// Constructor that takes the user profile as a parameter.
   PopularScreen({required this.userProfile});
 
   @override
@@ -88,6 +92,7 @@ class _PopularScreenState extends State<PopularScreen>
     );
   }
 
+  /// Build a GridView of popular movies or TV shows based on the provided future.
   Widget _buildMediaGrid(Future<Map<String, dynamic>> future) {
     // Determine if we are in dark mode or light mode
     var brightness = Theme.of(context).brightness;

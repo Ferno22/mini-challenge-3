@@ -5,10 +5,15 @@ import 'package:mini_challenge_3/models/user_profile.dart';
 import 'package:mini_challenge_3/widgets/favorite_button_tv_show.dart';
 import 'package:mini_challenge_3/widgets/rating_button_tv_show.dart';
 
+/// Widget for displaying details about a TV show.
 class TVShowDetailsScreen extends StatefulWidget {
+  /// The ID of the TV show.
   final int id;
+
+  /// The user profile associated with the current user.
   final UserProfile userProfile;
 
+  /// Constructor that takes the TV show ID and user profile as parameters.
   TVShowDetailsScreen({required this.id, required this.userProfile});
 
   @override
@@ -61,7 +66,7 @@ class _TVShowDetailsScreenState extends State<TVShowDetailsScreen> {
                       Text('Number of Seasons: ${tvShow.numberOfSeasons}'),
                       Text('Number of Episodes: ${tvShow.numberOfEpisodes}'),
                       Text(
-                          'Average Episode Run Time: ${tvShow.averageEpisodeRunTime[0]}'), // Display the average runtime
+                          'Average Episode Run Time: ${tvShow.averageEpisodeRunTime[0]}'),
                       Text('Summary: ${tvShow.overview}'),
                       Text('Genres: ${tvShow.genres.join(', ')}'),
                       Text('Cast Members: ${tvShow.castMembers.join(', ')}'),

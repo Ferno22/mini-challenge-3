@@ -7,10 +7,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'actor_details_screen.dart';
 
+/// Widget for searching movies, TV shows, and actors using the TMDB API.
 class SearchScreen extends StatefulWidget {
+  /// Identifier for the search screen.
   static const String id = 'search_screen';
+
+  /// The user profile associated with the current user.
   final UserProfile userProfile;
 
+  /// Constructor that takes the user profile as a parameter.
   SearchScreen({required this.userProfile});
 
   @override
@@ -93,11 +98,13 @@ class _SearchScreenState extends State<SearchScreen> {
           },
         ),
         actions: [
+          // Add button to clear search history
           IconButton(
             onPressed: _clearSearchHistory,
             icon: Icon(Icons.delete),
             tooltip: 'Clear search history',
           ),
+          // Add button to clear search text
           IconButton(
             onPressed: () {
               _clearSearch();
@@ -123,14 +130,17 @@ class _SearchScreenState extends State<SearchScreen> {
                   var mediaType = result['media_type'];
 
                   return ListTile(
+                    // Add leading image if there is a poster path
                     leading: posterPath != null
                         ? Image.network(
                             'https://image.tmdb.org/t/p/w92$posterPath',
                             fit: BoxFit.cover,
                           )
                         : null,
+                    // Display title
                     title: Text(title),
                     onTap: () {
+                      // Navigate to details screen based on media type
                       if (mediaType == 'movie') {
                         Navigator.push(
                           context,
@@ -160,6 +170,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 },
               );
             } else {
+              // Display search history if no results
               return ListView.builder(
                 itemCount: _searchHistory.length,
                 itemBuilder: (context, index) {

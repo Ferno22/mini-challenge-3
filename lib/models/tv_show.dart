@@ -1,21 +1,56 @@
+/// Represents a TV show with details such as ID, title, poster path, creators,
+/// air dates, number of seasons and episodes, episode run time, overview, genres,
+/// cast members, age suitability, production status, rating, and available streaming services.
 class TVShow {
+  /// Unique identifier for the TV show.
   final int id;
+
+  /// The title of the TV show.
   final String title;
+
+  /// The path to the TV show's poster image.
   final String posterPath;
+
+  /// List of creators associated with the TV show.
   final List<Map<String, dynamic>> createdBy;
+
+  /// The first air date of the TV show.
   final String firstAirDate;
+
+  /// The last air date of the TV show.
   final String lastAirDate;
+
+  /// The total number of seasons of the TV show.
   final int numberOfSeasons;
+
+  /// The total number of episodes of the TV show.
   final int numberOfEpisodes;
+
+  /// The run time of each episode in minutes.
   final List<int> episodeRunTime;
+
+  /// A brief overview or description of the TV show.
   final String overview;
+
+  /// List of genres associated with the TV show.
   final List<String> genres;
+
+  /// List of cast members in the TV show.
   final List<String> castMembers;
+
+  /// Indicates whether the TV show is for adults or not.
   final bool adult;
+
+  /// Indicates whether the TV show is currently in production.
   final bool inProduction;
+
+  /// The average rating of the TV show.
   final double rating;
+
+  /// List of streaming services where the TV show is available.
   final List<String> providers;
 
+  /// Constructor for creating an instance of the [TVShow] class.
   TVShow({
     required this.id,
     required this.title,
@@ -35,6 +70,7 @@ class TVShow {
     required this.providers,
   });
 
+  /// Converts the [TVShow] object to a JSON format.
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -56,6 +92,7 @@ class TVShow {
     };
   }
 
+  /// Calculates and returns the average episode run time as a list.
   List<String> get averageEpisodeRunTime {
     if (episodeRunTime.isEmpty) {
       return ['Not Available'];
@@ -66,10 +103,12 @@ class TVShow {
     }
   }
 
+  /// Returns a list of creator names associated with the TV show.
   List<String> get creatorNames {
     return createdBy.map((creator) => creator['name'] as String).toList();
   }
 
+  /// Factory method for creating an instance of the [TVShow] class from JSON data.
   factory TVShow.fromJson(Map<String, dynamic> json,
       Map<String, dynamic> creditsJson, Map<String, dynamic> providersJson) {
     var createdByJson = json['created_by'] as List;

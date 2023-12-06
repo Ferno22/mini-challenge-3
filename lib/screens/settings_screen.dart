@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/models/user_profile.dart';
 import 'package:mini_challenge_3/api/tmdb_api.dart';
 
+/// Widget for displaying and editing user settings.
 class SettingsScreen extends StatefulWidget {
+  /// The user profile associated with the current user.
   final UserProfile userProfile;
+
+  /// Constructor that takes the user profile as a parameter.
   SettingsScreen({required this.userProfile});
 
   @override

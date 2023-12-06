@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/models/user_profile.dart';
 import 'package:mini_challenge_3/screens/settings_screen.dart';
 
+/// Widget for displaying user profile information, including watchlist and rated list.
 class ProfileScreen extends StatelessWidget {
+  /// The user profile associated with the current user.
   final UserProfile userProfile;
 
+  /// Constructor that takes the user profile as a parameter.
   ProfileScreen({required this.userProfile});
 
   @override
@@ -13,9 +16,9 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('My Profile'),
         actions: <Widget>[
-          // Add actions list to AppBar
+          // Add settings icon to AppBar for navigating to SettingsScreen
           IconButton(
-            icon: Icon(Icons.settings), // Add settings icon
+            icon: Icon(Icons.settings),
             onPressed: () {
               Navigator.push(
                 context,
@@ -30,6 +33,7 @@ class ProfileScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
+          // Watchlist section
           const ListTile(
             title: Text('My Watchlist',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
@@ -40,14 +44,18 @@ class ProfileScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 Map<String, dynamic> movie = userProfile.watchlist[index];
                 return ListTile(
+                  // Display movie poster
                   leading: Image.network(
                       'https://image.tmdb.org/t/p/w500${movie['posterPath']}'),
+                  // Display movie title
                   title: Text(movie['title'] ?? 'Unknown Title'),
+                  // Add remove button to remove movie from watchlist
                   trailing: IconButton(
                     icon: Icon(Icons.remove_circle_outline),
                     onPressed: () {
                       userProfile.watchlist.removeAt(index);
                       userProfile.saveProfile();
+                      // Refresh the profile screen after removing an item
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -60,6 +68,7 @@ class ProfileScreen extends StatelessWidget {
               },
             ),
           ),
+          // Rated List section
           const ListTile(
             title: Text('My Rated List',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
@@ -70,9 +79,12 @@ class ProfileScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 Map<String, dynamic> ratedItem = userProfile.ratedList[index];
                 return ListTile(
+                  // Display rated item poster
                   leading: Image.network(
                       'https://image.tmdb.org/t/p/w500${ratedItem['posterPath']}'),
+                  // Display rated item title
                   title: Text(ratedItem['title'] ?? 'Unknown Title'),
+                  // Add remove button to remove rated item from the list
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -81,6 +93,7 @@ class ProfileScreen extends StatelessWidget {
                         onPressed: () {
                           userProfile.ratedList.removeAt(index);
                           userProfile.saveProfile();
+                          // Refresh the profile screen after removing an item
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -91,6 +104,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  // Display rated item rating as a subtitle
                   subtitle: Text('Rating: ${ratedItem['rating']}'),
                 );
               },
