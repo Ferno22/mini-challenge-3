@@ -11,6 +11,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  late String _userName;
   late bool _isDarkTheme;
   late String _country;
   late String _language;
@@ -20,6 +21,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
+    _userName = widget.userProfile.userName;
     _isDarkTheme = widget.userProfile.isDarkTheme;
     _country = widget.userProfile.country;
     _language = widget.userProfile.language;
@@ -36,7 +38,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: <Widget>[
           ListTile(
             title: Text('User Name'),
-            subtitle: Text(widget.userProfile.userName),
+            subtitle: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: TextEditingController(text: _userName),
+                    onChanged: (value) {
+                      _userName = value;
+                    },
+                    onSubmitted: (value) {
+                      widget.userProfile.userName = _userName;
+                      widget.userProfile.saveProfile();
+                    },
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.save),
+                  onPressed: () {
+                    widget.userProfile.userName = _userName;
+                    widget.userProfile.saveProfile();
+                  },
+                ),
+              ],
+            ),
           ),
           SwitchListTile(
             title: Text('Dark Theme'),

@@ -67,7 +67,7 @@ class Movie {
         duration = '${json['runtime']} min',
         rating = (json['vote_average'] as num?)?.toDouble() ?? 0.0,
         services =
-            (providersJson['results']['US']['flatrate'] as List<dynamic>?)
+            (providersJson['results']['US']?['flatrate'] as List<dynamic>?)
                     ?.map((item) => item['provider_name'].toString())
                     .toList() ??
                 [];

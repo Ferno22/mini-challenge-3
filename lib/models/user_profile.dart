@@ -14,7 +14,7 @@ class UserProfile extends ChangeNotifier {
   List<Map<String, dynamic>> ratedList;
 
   UserProfile({
-    required this.userName,
+    this.userName = 'Default User',
     required this.isDarkTheme,
     required this.country,
     required this.language,
