@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mini_challenge_3/models/user_profile.dart';
-import 'package:mini_challenge_3/screens/movie_details_screen.dart';
+import 'package:mini_challenge_3/screens/settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   final UserProfile userProfile;
@@ -12,10 +12,25 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('My Profile'),
+        actions: <Widget>[
+          // Add actions list to AppBar
+          IconButton(
+            icon: Icon(Icons.settings), // Add settings icon
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsScreen(
+                      userProfile: userProfile), // Navigate to SettingsScreen
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
-          ListTile(
+          const ListTile(
             title: Text('My Watchlist',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           ),
@@ -45,7 +60,7 @@ class ProfileScreen extends StatelessWidget {
               },
             ),
           ),
-          ListTile(
+          const ListTile(
             title: Text('My Rated List',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           ),

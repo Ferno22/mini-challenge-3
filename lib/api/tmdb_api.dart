@@ -81,4 +81,20 @@ class TmdbApi {
   Future<Map<String, dynamic>> getActorTvShows(int id) async {
     return _makeGetRequest('person/$id/tv_credits?api_key=$apiKey');
   }
+
+  Future<Map<String, dynamic>> getCountries() async {
+    return _makeGetRequest('configuration/countries?api_key=$apiKey');
+  }
+
+  Future<Map<String, dynamic>> getLanguages() async {
+    return _makeGetRequest('configuration/languages?api_key=$apiKey');
+  }
+
+  Future<Map<String, dynamic>> getGeneralMovieProviders() async {
+    return _makeGetRequest('watch/providers/movie?api_key=$apiKey');
+  }
+
+  Future<Map<String, dynamic>> getGeneralTVShowProviders() async {
+    return _makeGetRequest('watch/providers/tv?api_key=$apiKey');
+  }
 }

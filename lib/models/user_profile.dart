@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
 
-class UserProfile {
+class UserProfile extends ChangeNotifier {
   static UserProfile? _instance;
 
   String userName;
@@ -39,6 +40,7 @@ class UserProfile {
     prefs.setStringList('services', services);
     prefs.setString('watchlist', json.encode(watchlist));
     prefs.setString('ratedList', json.encode(ratedList));
+    notifyListeners();
   }
 
   // Method to load profile data

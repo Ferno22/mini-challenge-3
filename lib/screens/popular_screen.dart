@@ -26,32 +26,40 @@ class _PopularScreenState extends State<PopularScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Determine if we are in dark mode or light mode
+    var brightness = Theme.of(context).brightness;
+    var isDarkMode = brightness == Brightness.dark;
+
+    // Choose colors based on the theme
+    var backgroundColor = isDarkMode ? Colors.blueGrey[900] : Colors.white;
+    var textColor = isDarkMode ? Colors.white : Colors.black;
+    var accentColor = isDarkMode ? Colors.cyanAccent : Colors.blue;
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: backgroundColor,
         elevation: 0, // Remove the shadow
         title: Text(
           'Popular Now',
-          style: TextStyle(color: Colors.white), // Customize title color
+          style: TextStyle(color: textColor), // Customize title color
         ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(60),
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              color: Colors.blueGrey[900],
+              color: backgroundColor,
               borderRadius: BorderRadius.circular(25),
             ),
             child: TabBar(
               controller: _tabController,
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
-                border: Border.all(color: Colors.cyanAccent, width: 1),
+                border: Border.all(color: accentColor, width: 1),
               ),
-              labelColor:
-                  Colors.cyanAccent, // Customize text color for selected tab
+              labelColor: accentColor, // Customize text color for selected tab
               unselectedLabelColor:
-                  Colors.white, // Customize text color for unselected tab
+                  textColor, // Customize text color for unselected tab
               tabs: const [
                 Tab(
                   text: 'Movies',
@@ -81,6 +89,13 @@ class _PopularScreenState extends State<PopularScreen>
   }
 
   Widget _buildMediaGrid(Future<Map<String, dynamic>> future) {
+    // Determine if we are in dark mode or light mode
+    var brightness = Theme.of(context).brightness;
+    var isDarkMode = brightness == Brightness.dark;
+
+    // Choose colors based on the theme
+    var textColor = isDarkMode ? Colors.white : Colors.black;
+
     return FutureBuilder(
       future: future,
       builder: (context, snapshot) {
@@ -131,13 +146,13 @@ class _PopularScreenState extends State<PopularScreen>
                       ),
                       Container(
                         width: double.infinity,
-                        color: Colors.blueGrey[900],
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             media['title'] ?? media['name'] ?? '',
-                            style: const TextStyle(color: Colors.white),
+                            style: TextStyle(color: textColor),
                             overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),
